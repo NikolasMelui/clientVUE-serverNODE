@@ -5,8 +5,3 @@ export default () => {
     baseURL: 'https://vue-express-nikolasmelui.c9users.io:8081/'
   });
 }
-import axios from 'axios';
-
-export default() => {
-  
-}
