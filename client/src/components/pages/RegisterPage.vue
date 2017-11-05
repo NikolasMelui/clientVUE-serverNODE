@@ -11,6 +11,14 @@
 </template>
 
 <script>
+
+import DevelopPartail from '../partials/DevelopPartial'; // Временная заглушка на страницы без инфы
+
+import HeadPartial from '../partials/HeadPartial';
+import HeaderPartial from '../partials/HeaderPartial';
+import FooterPartial from '../partials/FooterPartial';
+import DonationPartial from '../partials/DonationPartial';
+
 import AuthenticationService from '@/services/AuthenticationService';
 
 export default {
@@ -32,7 +40,6 @@ export default {
         email: this.email,
         password: this.password
       });
-      console.log(response.data.message);
       this.registered = response.data.seccessfulMessage;
     }
   },
@@ -45,13 +52,5 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-a {
-  color: #42b983;
-}
 </style>
