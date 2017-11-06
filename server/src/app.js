@@ -1,8 +1,16 @@
-const mail = require('./mail');
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const morgan = require('morgan');
+const mail = require('./mail'),
+      express = require('express'),
+      bodyParser = require('body-parser'),
+      cors = require('cors'),
+      morgan = require('morgan');
+
+// ROUTES
+const index = require('./routes/index'),
+      register = require('./routes/register'),
+      about = require('./routes/about'),
+      cooperation = require('./routes/cooperation'),
+      events = require('./routes/events'),
+      reports = require('./routes/reports');
 
 const app = express();
 app.use(morgan('combined'));
@@ -10,10 +18,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.post('/register', (req, res) => {
-  let seccessfulMessage = 'Your user was registered.';
+  let successfulMessage = 'Your user was registered.';
   res.send({
-    message: `Hello ${req.body.email}. ${seccessfulMessage}`,
-    seccessfulMessage: seccessfulMessage
+    message: `Hello ${req.body.email}. ${successfulMessage}`,
+    seccessfulMessage: successfulMessage
   });
   let mailRecipient = req.body.email;
   let mailSubject = 'Success registration.';
