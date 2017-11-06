@@ -31,4 +31,4 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-app.listen(config.port8081);
+module.exports = app;

@@ -1,5 +1,5 @@
 {
-  "port8081": "8081",
+  "serverPort": "8081",
   "mailSender" : {
     "user" : "nikolasmelui@gmail.com",
     "pass" : "Nikolaspassword1"

@@ -21,7 +21,7 @@
     "eslint-plugin-standard": "^3.0.1"
   },
   "scripts": {
-    "start": "./node_modules/nodemon/bin/nodemon.js src/app.js --exec 'npm run lint && node'",
+    "start": "./node_modules/nodemon/bin/nodemon.js --nouse-idle-notification --expose-gc src/bin/www --exec 'npm run lint && node'",
     "lint": "./node_modules/.bin/eslint **/*.js"
   },
   "author": "",
