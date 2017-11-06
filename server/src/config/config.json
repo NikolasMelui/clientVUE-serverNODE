@@ -1,0 +1,7 @@
+{
+  "port8081": "8081",
+  "mailSender" : {
+    "user" : "nikolasmelui@gmail.com",
+    "pass" : "Nikolaspassword1"
+  }
+}

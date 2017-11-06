@@ -1,32 +1,34 @@
-const mail = require('./mail'),
-      express = require('express'),
+const express = require('express'),
       bodyParser = require('body-parser'),
+      mail = require('mail'),
       cors = require('cors'),
+      config = require('./config/config'),
+      {sequelize} = require('./models'),
       morgan = require('morgan');
-
-// ROUTES
-const index = require('./routes/index'),
-      register = require('./routes/register'),
-      about = require('./routes/about'),
-      cooperation = require('./routes/cooperation'),
-      events = require('./routes/events'),
-      reports = require('./routes/reports');
 
 const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post('/register', (req, res) => {
-  let successfulMessage = 'Your user was registered.';
-  res.send({
-    message: `Hello ${req.body.email}. ${successfulMessage}`,
-    seccessfulMessage: successfulMessage
-  });
-  let mailRecipient = req.body.email;
-  let mailSubject = 'Success registration.';
-  let mailText = `Your user ${req.body.email} was successfully registered.`;
-  mail(mailRecipient, mailSubject, mailText);
+require('./routes')(app);
+
+// catch 404 error, forward to error handler
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
-app.listen(process.env.port || 8081);
+// error handler
+app.use((err, req, res, next) => {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+app.listen(config.port8081);
