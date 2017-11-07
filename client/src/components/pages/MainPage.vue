@@ -7,12 +7,12 @@
 
 <script>
 
-import DevelopPartail from '../partials/DevelopPartial'; // Временная заглушка на страницы без инфы
+// import DevelopPartail from '../partials/DevelopPartial'; // Временная заглушка на страницы без инфы
 
-import HeadPartial from '../partials/HeadPartial';
-import HeaderPartial from '../partials/HeaderPartial';
-import FooterPartial from '../partials/FooterPartial';
-import DonationPartial from '../partials/DonationPartial';
+// import HeadPartial from '../partials/HeadPartial';
+// import HeaderPartial from '../partials/HeaderPartial';
+// import FooterPartial from '../partials/FooterPartial';
+// import DonationPartial from '../partials/DonationPartial';
 
 export default {
   name: 'MainPage',
