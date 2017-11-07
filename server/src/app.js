@@ -1,9 +1,7 @@
 const express = require('express'),
       bodyParser = require('body-parser'),
-      mail = require('mail'),
       cors = require('cors'),
       config = require('./config/config'),
-      {sequelize} = require('./models'),
       morgan = require('morgan');
 
 const app = express();

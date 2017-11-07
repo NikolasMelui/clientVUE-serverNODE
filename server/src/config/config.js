@@ -1,5 +1,5 @@
 module.exports = {
-  port: process.env.PORT || 8081,
+  serverPort: 8081,
   mailSender: {
     user: 'nikolasmelui@gmail.com',
     pass: 'Nikolaspassword1'
@@ -12,6 +12,6 @@ module.exports = {
       dialect: process.env.DIALECT || 'sqlite',
       host: process.env.HOST || 'localhost',
       storage: './samitcom.sqlite'
-    } 
+    }
   }
 };
