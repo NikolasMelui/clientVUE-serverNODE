@@ -1,15 +1,8 @@
-const mail = require('./mail');
+const AuthenticationController = require('./controllers/AuthenticationController');
+const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy');
 
 module.exports = (app) => {
-  app.post('/register', (req, res) => {
-    let successfulMessage = 'Your user was registered.';
-    res.send({
-      message: `Hello ${req.body.email}. ${successfulMessage}`,
-      seccessfulMessage: successfulMessage
-    });
-    let mailRecipient = req.body.email,
-        mailSubject = 'Success registration.',
-        mailText = `Your user ${req.body.email} was successfully registered.`;
-    mail(mailRecipient, mailSubject, mailText);
-  });
+  app.post('/register',
+    AuthenticationControllerPolicy.register,
+    AuthenticationController.register);
 };
