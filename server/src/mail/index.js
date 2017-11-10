@@ -31,4 +31,3 @@ function sendMail (recipient, subject, text) {
 }
 
 module.exports = sendMail;
-
