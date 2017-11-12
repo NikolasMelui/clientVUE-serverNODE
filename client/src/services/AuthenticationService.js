@@ -1,7 +1,10 @@
 import Api from '@/services/Api';
 
 export default {
-  register (credentials) {
-    return Api().post('register', credentials);
+  singup (credentials) {
+    return Api().post('singup', credentials);
+  },
+  singin (credentials) {
+    return Api().post('singin', credentials);
   }
 };

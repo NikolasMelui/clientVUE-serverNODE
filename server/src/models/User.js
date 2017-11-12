@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) =>
   sequelize.define('User', {
-    email: {
+    username: {
       type: DataTypes.STRING,
       unique: true
     },
-    username: {
+    email: {
       type: DataTypes.STRING,
       unique: true
     },
