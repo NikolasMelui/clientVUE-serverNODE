@@ -6,14 +6,16 @@ module.exports = {
   singup (req, res) {
     User.create(req.body)
       .then(() => {
-        let successfulMessage = 'Your user was registered.';
         res.send({
-          message: `Hello ${req.body.email}. ${successfulMessage}`,
-          seccessfulMessage: successfulMessage
+          seccessfulMessage: 'Вы были успешно зарегистрированы.'
         });
         let mailRecipient = req.body.email,
-            mailSubject = 'Success registration.',
-            mailText = `Your user ${req.body.email} was successfully registered.`;
+            mailSubject = 'Регистрация на сайте Samara IT Community',
+            mailText = `
+                        Вы были успешно зарегистрированы.
+                        Логин - ${req.body.email}.
+                        Пароль - ${req.body.password}
+                       `;
         mail(mailRecipient, mailSubject, mailText);
       })
       .catch(Sequelize.UniqueConstraintError, (err) => {
@@ -23,25 +25,23 @@ module.exports = {
       });
   },
   singin (req, res) {
-    try {
-      // const {email, password} = req.body;
-      // const user = User.findOne({
-      //   where: {
-      //     email: email
-      //   }
-      // });
-      // if (!user) {
-      //   return res.status(403).send({
-      //     error: 'The login info was incorrect.'
-      //   });
-      // }
-      res.send(req.body);
-    } catch (err) {
-      console.log(err);
-      res.send(req);
-      // res.status(400).send({
-      //   error: 'Пользователь с таким E-mail уже зарегистрирован'
-      // });
-    }
+    const {email, password} = req.body;
+    const user = User.findOne({
+      where: {
+        email: email
+      }
+    })
+      .then(() => {
+        if (!user) {
+          return res.status(403).send({
+            error: 'The login info was incorrect.'
+          });
+        }
+      })
+      .catch(Sequelize.UniqueConstraintError, (err) => {
+        res.status(400).send({
+          error: 'Пользователь с таким E-mail уже зарегистрирован'
+        });
+      });
   }
 };

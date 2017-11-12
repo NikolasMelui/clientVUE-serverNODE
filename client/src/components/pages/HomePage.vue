@@ -15,9 +15,9 @@
 // import DonationPartial from '../partials/DonationPartial';
 
 export default {
-  msg: 'Home page',
   data () {
     return {
+      msg: 'Home page'
     };
   }
 };

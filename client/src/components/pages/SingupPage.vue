@@ -5,33 +5,61 @@
         <v-form v-model="valid" ref="form" lazy-validation>
           <v-text-field
             label="Username"
-            v-model="username"
-            :rules="usernameRules"
+            v-model="formUsername"
+            :rules="formUsernameRules"
             :counter="16"
             required
           ></v-text-field>
           <v-text-field
             label="Email"
-            v-model="email"
-            :rules="emailRules"
+            v-model="formEmail"
+            :rules="formEmailRules"
             required
           ></v-text-field>
           <v-text-field
             label="Password"
-            v-model="password"
-            :rules="passwordRules"
+            v-model="formPassword"
+            :rules="formPasswordRules"
             :counter="16"
             required
           ></v-text-field>
+          
           <v-checkbox
-            label="Я согласен с правилами"
-            v-model="checkbox"
+            v-model="formTerms"
+            label="Do you agree?"
+            :rules="formTermsRules"
             required
-          ></v-checkbox>
-          <div class="dangerAlert" v-html="error"/>
+            >
+            <div slot="label" @click.stop="valid = true">
+              Я принимаю
+              <a href="javascript:;" @click.stop="terms = true">правила</a>
+              .
+            </div>
+          </v-checkbox>
+          
+          <v-alert v-if="successMesShow" v-html="successMes" color="success" icon="check_circle" value="true"></v-alert>
+          <v-alert v-if="errorMesShow" v-html="errorMes" color="error" icon="warning" value="true" dismissible></v-alert>
+          
+          <v-dialog v-model="terms" max-width="70%">
+            <v-card>
+              <v-card-title class="title">Правила</v-card-title>
+              <v-card-text v-for="n in 5" :key="n">
+                {{ content }}
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  flat
+                  color="purple"
+                  @click="terms = false"
+                >Ok</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
           <v-btn pink darken-4
             @click="singup"
-            :disabled="!valid"
+            :disabled="!formIsValid"
           >
             Регистрация
           </v-btn>
@@ -56,50 +84,78 @@ import AuthenticationService from '@/services/AuthenticationService';
 export default {
   data () {
     return {
+      errorMes: '',
+      successMesShow: false,
+      errMesShow: false,
       valid: false,
-      error: null,
-      username: null,
-      usernameRules: [
+      terms: false,
+      success: null,
+      formUsername: '',
+      formUsernameRules: [
         (v) => (v.length <= 16 && v.length >= 4) || 'Логин не может быть короче 4 и длиннее 16 символов'
       ],
-      email: null,
-      emailRules: [
+      formEmail: '',
+      formEmailRules: [
         (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail введен неверно'
       ],
-      password: null,
-      passwordRules: [
+      formPassword: '',
+      formPasswordRules: [
         (v) => (v.length <= 16 && v.length >= 6) || 'Пароль не может быть короче 6 и длиннее 16 символов'
       ],
-      checkbox: null,
-      checkboxRules: [
-        (v) => !!v || 'Ознакомьтесь с правилами, чтобы продолжить'
+      formTerms: false,
+      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.`,
+      formTermsRules: [
+        (v) => (v || '') || 'Ознакомьтесь с правилами, чтобы продолжить'
       ]
     };
   },
   methods: {
-    singup () {
-      if (this.$refs.form.validate()) {
-        try {
-          AuthenticationService.singup({
-            username: this.username,
-            email: this.email,
-            password: this.password
-          });
-          // this.clear();
-        } catch (error) {
-          this.error = error.response.data.error;
-        }
-      }
+    async singup () {
+      await AuthenticationService.singup({
+        username: this.formUsername,
+        email: this.formEmail,
+        password: this.formPassword
+      })
+      .then((res) => {
+        this.successMes = res.data;
+        this.successMesShow = true;
+        // setTimeout(() => { this.successMesShow = false; }, 2000);
+        console.log(this.successMes);
+        // this.clear();
+      })
+      .catch((err) => {
+        this.errorMes = err.response.data.error;
+        this.errorMesShow = true;
+        // setTimeout(() => { this.errorMesShow = false; }, 2000);
+        console.log(this.errorMes);
+      });
     },
     clear () {
-      this.$refs.form.reset();
+      // this.form = Object.assign({}, defaultForm);
+      // this.$refs.form.reset();
+      this.formUsername = 'nikolasmelui';
+      this.formEmail = 'slak@samaradom.ru';
+      this.formPassword = 'nikolaspassword';
+    }
+  },
+  computed: {
+    formIsValid () {
+      return (
+        this.formUsername &&
+        this.formEmail &&
+        this.formPassword &&
+        this.formTerms
+      );
     }
   }
 };
 </script>
 
 <style scoped>
-.dangerAlert{
-  color: red;
-}
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    opacity: 0
+  }
 </style>
