@@ -6,6 +6,8 @@ import router from './router';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.css';
 
+require('./stylus/main.styl');
+
 Vue.config.productionTip = false;
 
 Vue.use(Vuetify);

@@ -1,41 +1,43 @@
 <template>
-    <v-container xs10 offset-xs1>
-      <v-form v-model="valid" ref="form" lazy-validation>
-        <v-text-field
-          label="Username"
-          v-model="username"
-          :rules="usernameRules"
-          :counter="16"
-          required
-        ></v-text-field>
-        <v-text-field
-          label="Email"
-          v-model="email"
-          :rules="emailRules"
-          required
-        ></v-text-field>
-        <v-text-field
-          label="Password"
-          v-model="password"
-          :rules="passwordRules"
-          :counter="16"
-          required
-        ></v-text-field>
-        <v-checkbox
-          label="Do you agree?"
-          v-model="checkbox"
-          :rules="[v => !!v || 'You must agree to continue!']"
-          required
-        ></v-checkbox>
-        <div class="dangerAlert" v-html="error" />
-        <v-btn
-          @click="submit"
-          :disabled="!valid"
-        >
-          submit
-        </v-btn>
-      </v-form>
-  </v-container>
+  <v-app dark>
+    
+    <v-form v-model="valid" ref="form" lazy-validation>
+      <v-text-field
+        label="Username"
+        v-model="username"
+        :rules="usernameRules"
+        :counter="16"
+        required
+      ></v-text-field>
+      <v-text-field
+        label="Email"
+        v-model="email"
+        :rules="emailRules"
+        required
+      ></v-text-field>
+      <v-text-field
+        label="Password"
+        v-model="password"
+        :rules="passwordRules"
+        :counter="16"
+        required
+      ></v-text-field>
+      <v-checkbox
+        label="Do you agree?"
+        v-model="checkbox"
+        required
+      ></v-checkbox>
+      <div class="dangerAlert" v-html="error"/>
+      <v-btn pink darken-4
+        @click="submit"
+        :disabled="!valid"
+      >
+        submit
+      </v-btn>
+      <v-btn @click="clear">clear</v-btn>
+    </v-form>
+    
+  </v-app>
 </template>
 
 <script>
@@ -84,18 +86,22 @@ export default {
             email: this.email,
             password: this.password
           });
+          this.clear('hellooooowwwwww))))');
         } catch (error) {
           this.error = error.response.data.error;
         }
-        console.log(this);
       }
+    },
+    clear (log) {
+      this.$refs.form.reset();
+      console.log(log);
     }
   }
 };
 </script>
 
 <style scoped>
-.error{
+.dangerAlert{
   color: red;
 }
 </style>
