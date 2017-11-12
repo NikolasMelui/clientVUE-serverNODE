@@ -1,21 +1,22 @@
-// const mail = require('../mail'),
-const {User} = require('../models'),
-      Sequelize = require('sequelize');
+const mail = require('../mail'),
+      Sequelize = require('sequelize'),
+      {User} = require('../models');
 
 module.exports = {
   singup (req, res) {
     User.create(req.body)
-    // let successfulMessage = 'Your user was registered.';
-    // res.send({
-    //   message: `Hello ${req.body.email}. ${successfulMessage}`,
-    //   seccessfulMessage: successfulMessage
-    // });
-    // res.send(req.body);
-    // let mailRecipient = req.body.email,
-    //     mailSubject = 'Success registration.',
-    //     mailText = `Your user ${req.body.email} was successfully registered.`;
-    // mail(mailRecipient, mailSubject, mailText);
-      .catch(Sequelize.ValidationError, function (err) {
+      .then(() => {
+        let successfulMessage = 'Your user was registered.';
+        res.send({
+          message: `Hello ${req.body.email}. ${successfulMessage}`,
+          seccessfulMessage: successfulMessage
+        });
+        let mailRecipient = req.body.email,
+            mailSubject = 'Success registration.',
+            mailText = `Your user ${req.body.email} was successfully registered.`;
+        mail(mailRecipient, mailSubject, mailText);
+      })
+      .catch(Sequelize.UniqueConstraintError, (err) => {
         res.status(400).send({
           error: 'Пользователь с таким E-mail уже зарегистрирован'
         });
