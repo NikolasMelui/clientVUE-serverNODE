@@ -26,20 +26,31 @@ module.exports = {
   },
   singin (req, res) {
     const {email, password} = req.body;
-    const user = User.findOne({
+    User.findOne({
       where: {
         email: email
       }
     })
-      .then(() => {
+      .then((response) => {
+        const user = response;
         if (!user) {
           return res.status(403).send({
             error: 'The login info was incorrect.'
           });
         }
+        const isPasswordValid = password == user.password;
+        if (!isPasswordValid) {
+          return res.status(403).send({
+            error: 'The login info was incorrect.'
+          });
+        }
+        const userJson = user.toJSON();
+        res.send({
+          user: userJson
+        });
       })
-      .catch(Sequelize.UniqueConstraintError, (err) => {
-        res.status(400).send({
+      .catch(() => {
+        res.status(500).send({
           error: 'Пользователь с таким E-mail уже зарегистрирован'
         });
       });
