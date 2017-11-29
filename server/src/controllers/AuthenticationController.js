@@ -1,7 +1,15 @@
 const mail = require('../mail'),
       jwt = require('jsonwebtoken'),
       Sequelize = require('sequelize'),
+      config = require('../config/config'),
       {User} = require('../models');
+
+function jwtSingUser (user) {
+  const ONE_WEEK = 60 * 60 * 24 * 7;
+  return jwt.sing(user, config.authentication.jwtSecret, {
+    expiresIn: ONE_WEEK
+  });
+}
 
 module.exports = {
   singup (req, res) {
