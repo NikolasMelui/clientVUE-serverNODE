@@ -47,6 +47,9 @@ export default {
           AuthenticationService.singin({
             email: this.email,
             password: this.password
+          })
+          .then((res) => {
+            console.log(res.data.msg);
           });
         } catch (error) {
           this.error = error.response.data.error;
