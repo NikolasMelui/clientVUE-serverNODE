@@ -1,0 +1,39 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "express": "^4.15.4",
+    "joi": "^10.6.0",
+    "jsonwebtoken": "^8.0.0",
+    "morgan": "^1.8.2",
+    "nodemailer": "^4.4.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.0",
+    "sequelize": "^4.8.0",
+    "sqlite3": "^3.1.3"
+  },
+  "devDependencies": {
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint": "^4.6.0",
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "start": "./node_modules/nodemon/bin/nodemon.js --nouse-idle-notification --expose-gc src/bin/www --exec 'npm run lint && node'",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint src/**/*.js  --fix",
+    "seed": "node seed"
+  },
+  "author": "nikolasmelui",
+  "license": "ISC"
+}
